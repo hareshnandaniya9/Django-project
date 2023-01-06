@@ -1,0 +1,39 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+    
+
+</head>
+
+<body>
+
+
+    <!-- Start Wishlist  -->
+    <div class="wishlist-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table">
+                            <img src="{% static 'images/pytment.gif' %}" style="margin-top: -100px; margin-left: 300px;">
+                            <h1 style="color: green; margin-left: 350px;">Thank you. Your Payment Successfuly!</h1>
+                        </table>
+
+                            <a href="{% url 'index' %}" class="btn btn-primary" style="margin-left: 980px;">Back To Home </a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Wishlist -->
+
+    
+</body>
+
+</html>
+{% endblock %}

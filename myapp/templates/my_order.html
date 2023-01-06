@@ -1,0 +1,92 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+    
+
+</head>
+
+<body>
+
+
+    <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>Wishlist</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">My-Order</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+    <!-- Start Wishlist  -->
+    <div class="wishlist-box-main">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <div class="table-main table-responsive">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>Images</th>
+                                    <th>Product Name</th>
+                                    <th>Unit Price </th>
+                                    <th>QTY</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% if wishlist_lenth == 0 %}
+                                <h1 style="color: blue; margin-left: 400px;">No Product In Wishlist</h1>
+                                {% else %}
+                                {% for i in cart %}
+                                <tr>
+                                    <td class="thumbnail-img">
+                                        <a href="#">
+									<img class="img-fluid" src="{{i.product.product_image.url}}" style="width: 100px;height: 100px;" alt="" />
+								</a>
+                                    </td>
+                                    <td class="name-pr">
+                                        <a href="#">
+									{{i.product.product_name}}
+								</a>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p>₹{{i.product.product_price}}</p>
+                                    </td>
+                                    <td class="price-pr">
+                                        <p>{{i.product_qty}}</p>
+                                    </td>
+                                    
+                                    
+								</a>
+                                    </td>
+                                </tr>
+                                {% endfor %}
+                                
+                                {% endif %}
+                            </tbody>
+                        </table>
+                        <hr>
+                        <p style="color: blue; margin-left: 630px">₹{{subtotal}}/-</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End Wishlist -->
+
+    
+</body>
+
+</html>
+{% endblock %}

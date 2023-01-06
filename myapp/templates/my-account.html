@@ -1,0 +1,297 @@
+{% extends 'header.html' %}
+{% load static %}
+{% block content %}
+<!DOCTYPE html>
+<html lang="en">
+<!-- Basic -->
+
+<head>
+    
+</head>
+
+<body>
+ <!-- Start All Title Box -->
+    <div class="all-title-box">
+        <div class="container">
+            <div class="row">
+                <div class="col-lg-12">
+                    <h2>My Account</h2>
+                    <ul class="breadcrumb">
+                        <li class="breadcrumb-item"><a href="#">Shop</a></li>
+                        <li class="breadcrumb-item active">My Account</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- End All Title Box -->
+
+{% if request.session.email %}
+<!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row new-account-login">
+                <div class="col-sm-4 col-lg-4 mb-3">
+                    <div class="title-left">
+                        <h3 style="color:blue;">Change Password</h3>
+                    </div>
+                    <h5 ><a data-toggle="collapse" href="#formLogin" role="button" aria-expanded="false" style="color: olivedrab;">Click here to Change Password</a></h5>
+                    {% if msg1 %}
+                        <b style="color: darkorange;">{{msg1}}</b>
+                    {% endif %}
+                    <form class=" mt-3 collapse review-form-box" id="formLogin" method="post" action="{% url 'change_password' %}" name="frm">
+                        {% csrf_token %}
+                        <div class="form-row" >
+                            <div class="form-group col-md-9">
+                                <label for="InputPassword" class="mb-0" >Old Password</label>
+                                <input type="password" name="old_password" class="form-control" id="InputPassword" placeholder="Password" style="border-radius: 10px; border-width: 1px; border-color: purple;" required > 
+                            </div>
+                            <div class="form-group col-md-9">
+                                <label for="InputPassword" class="mb-0" >New Password</label>
+                                <input type="password" name="new_password" class="form-control" id="InputPassword" placeholder="Password" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checknewpassword()" required > 
+                                <span class="span" id="new_password" style="color: blue;"></span>
+
+                            </div>
+                            
+                            <div class="form-group col-md-9">
+                                <label for="InputPassword" class="mb-0" >Confrim New Password</label>
+                                <input type="password" name="cnew_password" class="form-control" id="InputPassword" placeholder="Password" style="border-radius: 10px; border-width: 1px; border-color: purple;" required onblur="checkcpassword()"> 
+                                <span class="span" id="cnew_password" style="color: blue;"></span>
+
+                            </div>
+                        </div>
+                        <button type="submit" class="btn hvr-hover" style="margin-left: 20px; width: 200px; border-radius: 10px;" id="btn">Change Password</button>
+                    </form>
+                </div>
+                <div class="col-sm-6 col-lg-7 mb-3">
+                    <div class="title-left">
+                        <h3 style="color: blue;">Edit Profile</h3>
+                    </div>
+                        <h5><a href="{% url 'profile' %}">Click here Update Profile</h5></a>
+                    
+
+                    {% if msg %}
+                        <b style="color: blue;">{{msg}}</b>
+                    {% endif %}
+                    <form  id="formRegister" method="post" action="{% url 'profile' %}" enctype="multipart/form-data" name="frm">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            <div class="form-group col-md-9">
+                                 <img src="{{user.profile_pic.url}}" class="form-control" style="width: 230px; height: 300px; position: absolute; margin-top:10px; margin-left:500px; border-radius:30%;">
+                               
+                                <input type="file" name="profile_pic" style="position: absolute; margin-left:500px; margin-top:330px;" >
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="text" class="form-control" id="InputName" value="{{user.fname}}" name="fname" placeholder="First Name" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkFname()"> 
+                                <span class="span" id="fname" style="color: blue;"></span>
+
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="text" class="form-control" id="InputLastname" value="{{user.lname}}"name="lname" placeholder="Last Name" style="border-radius: 10px; border-width: 1px; border-color: purple;"onblur="checkLname()"> 
+                                <span class="span" id="lname" style="color: blue;"></span>
+
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="email" value="{{user.email}}"  name="email" class="form-control" id="InputEmail1" placeholder="Enter Email" style="border-radius: 10px; border-width: 1px; border-color: purple;" readonly> </div>
+                            <div class="form-group col-md-9">
+                                <input type="text" value="{{user.mobile}}" name="mobile" class="form-control" id="InputEmail1" placeholder="Enter Mobile Number" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkmobile()"> 
+                                <span class="span" id="mobile" style="color: blue;"></span>
+
+                            </div>
+                              <div class="form-group col-md-9">
+                                <textarea cols="57" rows="5" placeholder="Enter Address" name="address" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checaddress()">{{user.address}}</textarea> 
+                                <span class="span" id="address" style="color: blue;"></span>
+
+                            </div>
+                            
+                             
+                        </div>
+                        <button type="submit" class="btn hvr-hover" style="margin-left: 110px; width: 200px; border-radius: 10px; color: white;" id="btn">Update Profile</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>
+    {% else %}
+    <!-- Start Cart  -->
+    <div class="cart-box-main">
+        <div class="container">
+            <div class="row new-account-login">
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="title-left">
+                        <h3 style="color:darksalmon;">Account Login</h3>
+                    </div>
+                    <h5 ><a data-toggle="collapse" href="#formLogin" role="button" aria-expanded="false" style="color: olivedrab;">Click here to Login</a></h5>
+                    <a href="{% url 'forgote_password' %}"><h5 style="margin-top: -85px; margin-left: 200px; color: blue;">Forgote Password ?</h5></a>
+                    {% if msg1 %}
+                        <b style="color: darkorange;">{{msg1}}</b>
+                    {% endif %}
+                    <br><br>
+                    <form class=" mt-3 collapse review-form-box" id="formLogin" method="post" action="{% url 'login' %}">
+                        {% csrf_token %}
+                        <div class="form-row" >
+                            <div class="form-group col-md-9">
+                                <label for="InputEmail" class="mb-0" >Email Address</label>
+                                <input type="email" name="email" class="form-control" id="email" placeholder="Enter Email" style="border-radius: 10px; border-width: 1px; border-color: purple;">
+
+                            <span id="email_error" style="color: red;"></span>
+
+                             </div>
+                            <div class="form-group col-md-9">
+                                <label for="InputPassword" class="mb-0" >Password</label>
+                                <input type="password" name="password" class="form-control" id="InputPassword" placeholder="Password" style="border-radius: 10px; border-width: 1px; border-color: purple;"> 
+                            </div>
+                        </div>
+                        <button type="submit" class="btn hvr-hover" style="margin-left: 110px; width: 200px; border-radius: 10px;">Login</button>
+                    </form>
+                </div>
+                <div class="col-sm-6 col-lg-6 mb-3">
+                    <div class="title-left">
+                        <h3 style="color: darksalmon;">Create New Account</h3>
+                    </div>
+                    <h5><a data-toggle="collapse" href="#formRegister" role="button" aria-expanded="false" style="color: olivedrab;">Click here to Register</a></h5>
+                    {% if msg %}
+                        <b style="color: darkorange;">{{msg}}</b>
+                    {% endif %}
+                    {% if msg_error %}
+                        <b style="color: darkorange; font-size: 30px;">{{msg_error}}</b>
+                    {% endif %}
+                    <form class="mt-3 collapse review-form-box" id="formRegister" method="post" action="{% url 'signup' %}" enctype="multipart/form-data" name="frm">
+                        {% csrf_token %}
+                        <div class="form-row">
+                            
+                             <div class="form-group col-md-9">
+                                <select class="form-control" name="usertype">
+                                    <option >---Select--</option>
+                                    <option value="User" >User</option>
+                                    <option value="Seller" >Seller</option>
+
+                                </select> 
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="text" class="form-control" id="InputName" value="{{user.fname}}" name="fname" placeholder="First Name" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkFname();"> 
+                                <span class="span" id="fname" style="color: blue;"></span>
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="text" class="form-control" id="InputLastname" value="{{user.lname}}"name="lname" placeholder="Last Name" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkLname();"> 
+                                <span class="span" id="lname" style="color: blue;"></span>
+
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="email" value="{{user.email}}" name="email" class="form-control" id="InputEmail1" placeholder="Enter Email" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkEmail()"> 
+                                <span class="span" id="email1" style="color: blue;"></span>
+                                <span id="email_error1" style="color: red;"></span>
+
+
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="text" value="{{user.mobile}}" name="mobile" class="form-control" id="mobile" placeholder="Enter Mobile Number" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkmobile();"> 
+                                <span class="span" id="mobile1" style="color: blue;"></span>
+                                <span id="mobile_error" style="color: red;"></span>
+
+
+                            </div>
+                              <div class="form-group col-md-9">
+                                <textarea cols="48" rows="5" placeholder="Enter Address" name="address" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checaddress()">{{user.address}}</textarea>
+                                <span class="span" id="address" style="color: blue;"></span>
+
+                            </div>
+                            <div class="form-group col-md-9">
+                                <input type="password" name="password" class="form-control" id="InputPassword1" placeholder="Password" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkpassword()"> 
+                                <span class="span" id="password" style="color: blue;"></span>
+
+                            </div>
+                             <div class="form-group col-md-9">
+                                <input type="password" name="cpassword" class="form-control" id="InputPassword1" placeholder="Confrim Password" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkcpassword()"> 
+                                <span class="span" id="cpassword" style="color: blue;"></span>
+
+                            </div>
+                             <div class="form-group col-md-9">
+                                <input type="file" class="form-control"name="profile_pic" style="border-radius: 10px; border-width: 1px; border-color: purple;" onblur="checkphoto()"> 
+                                <span class="span" id="profile_pic" style="color: blue;"></span>
+
+                            </div>
+                        </div>
+                        <button type="submit" class="btn hvr-hover" style="margin-left: 110px; width: 200px; border-radius: 10px;" id="btn">Register</button>
+                    </form>
+                </div>
+            </div>
+
+        </div>
+    </div>   
+    {% endif %}
+    <!-- Start My Account  -->
+    <script>
+        $("#email").change(function(){
+            var email=$(this).val();
+
+            $.ajax({
+                url: '/ajax/validate_email/',
+                data: {
+                    'email':email
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (!data.is_taken){
+                        document.getElementById("email_error").innerHTML="This Email Id Is Not Registered"
+                    }
+                    else
+                    {
+                        document.getElementById("email_error").innerHTML=""
+
+                    }
+                }
+            });
+        });
+ 
+
+        $("#InputEmail1").change(function(){
+            var email=$(this).val();
+
+            $.ajax({
+                url: '/ajax/validate_email/',
+                data: {
+                    'email':email
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.is_taken){
+                        document.getElementById("email_error1").innerHTML="This Email Id Is Alredy Registered"
+                    }
+                    else
+                    {
+                        document.getElementById("email_error1").innerHTML=""
+
+                    }
+                }
+            });
+        });
+
+        $("#mobile").change(function(){
+            var mobile=$(this).val();
+
+            $.ajax({
+                url: '/ajax/validate_mobile/',
+                data: {
+                    'mobile':mobile
+                },
+                dataType: 'json',
+                success: function(data) {
+                    if (data.is_taken){
+                        document.getElementById("mobile_error").innerHTML="This Mobile No Is Alredy Registered"
+                    }
+                    else
+                    {
+                        document.getElementById("mobile_error").innerHTML=""
+
+                    }
+                }
+            });
+        });
+    </script>
+    
+</body>
+
+</html>
+{% endblock %}
